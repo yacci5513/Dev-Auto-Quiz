@@ -17,8 +17,7 @@ GPT를 이용해 흥미로운 퀴즈를 생성하고, TTS로 음성을 만들어
 ### 1. 프로젝트 클론 및 의존성 설치
 
 ```bash
-git clone git@github.com:yacci5513/Dev-Auto-Quiz.git
-cd auto-quiz
+git clone git@github.com:{myname}/Dev-Auto-Quiz.git
 npm install
 ```
 
@@ -46,7 +45,7 @@ YOUTUBE_REDIRECT_URI=http://localhost:3000/oauth2callback
 3. YouTube Data API v3 활성화
 4. 사용자 인증 정보 생성 (OAuth 2.0 클라이언트 ID)
 5. 승인된 리디렉션 URI에 `http://localhost:3000/oauth2callback` 추가
-6. 클라이언트 ID와 시크릿을 `.env` 파일에 설정
+6. 클라이언트 ID와 시크릿을 `.env` 파일에 설정 
 
 ### 4. YouTube 인증
 
