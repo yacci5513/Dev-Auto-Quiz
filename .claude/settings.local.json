@@ -5,7 +5,10 @@
       "Bash(git remote add:*)",
       "Bash(mkdir:*)",
       "Bash(npm install)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(npm run auth:*)",
+      "Bash(npm run:*)"
     ],
     "deny": []
   }

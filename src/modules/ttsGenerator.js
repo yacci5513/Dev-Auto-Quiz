@@ -45,13 +45,13 @@ class TTSGenerator {
     }
 
     formatQuestionText(quiz) {
-        let text = `오늘의 퀴즈입니다! ${quiz.question} `;
+        let text = `${quiz.question} `;
         
         quiz.options.forEach((option, index) => {
             text += `${option} `;
         });
         
-        text += '정답이 무엇일까요? 3초 후에 정답을 공개하겠습니다!';
+        text += '정답은 무엇일까요?';
         
         return text;
     }
@@ -60,9 +60,8 @@ class TTSGenerator {
         const answerLetter = quiz.correctAnswer.charAt(0);
         const correctOption = quiz.options.find(opt => opt.startsWith(answerLetter));
         
-        let text = `정답은 ${quiz.correctAnswer}번, ${correctOption}입니다! `;
+        let text = `정답은 ${quiz.correctAnswer}번입니다. `;
         text += quiz.explanation;
-        text += ' 구독과 좋아요 부탁드려요!';
         
         return text;
     }

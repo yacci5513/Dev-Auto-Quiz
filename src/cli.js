@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+require('dotenv').config();
 const { program } = require('commander');
 const QuizScheduler = require('./scheduler');
 const YouTubeUploader = require('./modules/youtubeUploader');

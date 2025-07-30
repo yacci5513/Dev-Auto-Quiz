@@ -36,14 +36,16 @@ class QuizScheduler {
             const videoPath = await this.videoGenerator.createVideo(quiz, audioFiles);
             console.log('✅ 영상 생성 완료');
             
-            console.log('📤 4단계: YouTube 업로드');
-            const uploadResult = await this.youtubeUploader.upload(videoPath, quiz.title);
-            console.log('✅ YouTube 업로드 완료');
+            // YouTube 업로드는 일시적으로 주석 처리
+            // console.log('📤 4단계: YouTube 업로드');
+            // const uploadResult = await this.youtubeUploader.upload(videoPath, quiz.title);
+            // console.log('✅ YouTube 업로드 완료');
             
             console.log('🎉 모든 과정 완료!');
-            console.log(`📺 영상 URL: ${uploadResult.url}`);
+            console.log(`📁 영상 저장 위치: ${videoPath}`);
+            console.log(`📝 퀴즈 제목: ${quiz.title}`);
             
-            this.logSuccess(quiz, uploadResult);
+            this.logSuccess(quiz, { videoPath, localSave: true });
             
         } catch (error) {
             console.error('❌ 자동화 과정에서 오류 발생:', error);
