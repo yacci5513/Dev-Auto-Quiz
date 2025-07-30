@@ -60,7 +60,7 @@ class TTSGenerator {
         const answerLetter = quiz.correctAnswer.charAt(0);
         const correctOption = quiz.options.find(opt => opt.startsWith(answerLetter));
         
-        let text = `정답은 ${quiz.correctAnswer}번입니다. `;
+        let text = `정답은 ${answerLetter}입니다. `;
         text += quiz.explanation;
         
         return text;
@@ -70,9 +70,9 @@ class TTSGenerator {
         try {
             const mp3 = await this.openai.audio.speech.create({
                 model: "tts-1",
-                voice: "nova",
+                voice: "echo",
                 input: text,
-                speed: 1.0
+                speed: 1.15
             });
 
             const filePath = path.join(this.outputDir, filename);
