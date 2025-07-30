@@ -35,8 +35,9 @@ class VideoGenerator {
 
     async createVideo(quiz, audioFiles) {
         try {
-            const timestamp = Date.now();
-            const videoFileName = `quiz_${timestamp}.mp4`;
+            // 제목을 파일명으로 사용 (특수문자 제거 및 길이 제한)
+            const cleanTitle = this.sanitizeFileName(quiz.title);
+            const videoFileName = `${cleanTitle}.mp4`;
             const videoPath = path.join(this.outputDir, videoFileName);
 
             console.log('🎨 질문 화면 생성 중...');
@@ -295,6 +296,29 @@ class VideoGenerator {
             .replace(/>/g, '&gt;')
             .replace(/"/g, '&quot;')
             .replace(/'/g, '&#39;');
+    }
+
+    sanitizeFileName(title) {
+        // 특수문자 제거하되 공백은 유지
+        let cleanTitle = title
+            .replace(/[<>:"/\\|?*]/g, '') // Windows 금지 문자 제거
+            .replace(/[!@#$%^&*()+=\[\]{}';,]/g, '') // 기타 특수문자 제거
+            .replace(/[""'']/g, '') // 따옴표 제거
+            .replace(/[?!]/g, '') // 물음표, 느낌표 제거
+            .replace(/\s+/g, ' ') // 여러 공백을 하나로
+            .trim();
+        
+        // 길이 제한 (50자)
+        if (cleanTitle.length > 50) {
+            cleanTitle = cleanTitle.substring(0, 50).trim();
+        }
+        
+        // 빈 문자열이면 기본값
+        if (!cleanTitle) {
+            cleanTitle = 'quiz';
+        }
+        
+        return cleanTitle;
     }
 
     async combineFramesWithAudio(questionFrame, answerFrame, audioFiles, outputPath) {
