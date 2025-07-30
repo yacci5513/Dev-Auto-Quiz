@@ -13,9 +13,10 @@ program
 program
     .command('run')
     .description('퀴즈 영상을 한 번 생성하고 업로드')
-    .action(async () => {
+    .option('-t, --topic <topic>', '특정 주제로 퀴즈 생성')
+    .action(async (options) => {
         const scheduler = new QuizScheduler();
-        await scheduler.testRun();
+        await scheduler.testRun(options.topic);
     });
 
 program

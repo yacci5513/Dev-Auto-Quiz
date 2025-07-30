@@ -7,7 +7,9 @@ AI를 활용하여 흥미로운 퀴즈를 생성하고, TTS로 음성을 만들�
 ## ✨ 주요 기능
 
 - 🎯 **GPT-4 퀴즈 생성**: 28개 카테고리의 흥미로운 한국어 퀴즈 자동 생성
+- 🎭 **특정 주제 지정**: `--topic` 옵션으로 원하는 주제의 퀴즈 생성 가능
 - 🎤 **OpenAI TTS**: Echo 음성으로 자연스러운 한국어 발음 (1.15x 속도)
+- 🔤 **명확한 선택지 읽기**: A, B, C, D를 "에이, 비, 씨, 디"로 명확하게 발음
 - 🎬 **자동 영상 생성**: YouTube 쇼츠 규격 (1080x1920) 고품질 영상
 - 📤 **YouTube 자동 업로드**: API를 통한 자동 업로드 (선택사항)
 - ⏰ **스케줄링**: 매일 오전 9시, 오후 6시 자동 실행
@@ -64,9 +66,22 @@ node src/cli.js set-token <인증_코드>
 
 ## 🎮 사용법
 
-### 한 번 실행
+### 한 번 실행 (랜덤 주제)
 ```bash
 npm run run
+```
+
+### 특정 주제로 퀴즈 생성
+```bash
+# 애플 로고에 대한 퀴즈 생성
+node src/cli.js run --topic "애플 로고의 사과에서 한 입이 빠진 이유와 의미"
+
+# 무지개 과학 원리에 대한 퀴즈 생성  
+node src/cli.js run --topic "무지개가 나타나는 각도와 과학적 원리"
+
+# 다른 흥미로운 주제들
+node src/cli.js run --topic "코카콜라의 비밀 레시피와 역사"
+node src/cli.js run --topic "고양이가 항상 발로 착지하는 과학적 원리"
 ```
 
 ### 자동 스케줄링 시작 (매일 오전 9시, 오후 6시)
@@ -134,8 +149,26 @@ auto-quiz/
 
 ## 🔧 커스터마이징
 
+### 특정 주제 퀴즈 생성
+CLI에서 `--topic` 옵션을 사용하여 원하는 주제의 퀴즈를 생성할 수 있습니다:
+
+```bash
+node src/cli.js run --topic "당신이 원하는 주제"
+```
+
 ### 퀴즈 카테고리 추가
 `src/modules/quizGenerator.js`의 `quizCategories` 배열을 수정하세요.
+
+### TTS 음성 설정 변경
+`src/modules/ttsGenerator.js`에서 음성과 속도를 조정할 수 있습니다:
+
+```javascript
+const mp3 = await this.openai.audio.speech.create({
+    model: "tts-1",
+    voice: "echo", // alloy, echo, fable, onyx, nova, shimmer
+    speed: 1.15    // 0.25 ~ 4.0
+});
+```
 
 ### 영상 스타일 변경
 `src/modules/videoGenerator.js`의 `videoConfig` 객체를 수정하세요.

@@ -13,7 +13,7 @@ class QuizScheduler {
         this.isRunning = false;
     }
 
-    async generateAndUploadQuiz() {
+    async generateAndUploadQuiz(specificTopic = null) {
         if (this.isRunning) {
             console.log('⚠️ 이미 실행 중입니다. 스킵합니다.');
             return;
@@ -25,7 +25,7 @@ class QuizScheduler {
             console.log('🚀 자동 퀴즈 생성 시작...', new Date().toLocaleString());
             
             console.log('🎯 1단계: 퀴즈 생성');
-            const quiz = await this.quizGenerator.generateQuiz();
+            const quiz = await this.quizGenerator.generateQuiz(specificTopic);
             console.log(`✅ 퀴즈 생성 완료: ${quiz.title}`);
             
             console.log('🎙️ 2단계: 음성 생성');
@@ -118,9 +118,9 @@ class QuizScheduler {
         fs.appendFileSync(logFile, logLine);
     }
 
-    async testRun() {
+    async testRun(specificTopic = null) {
         console.log('🧪 테스트 실행...');
-        await this.generateAndUploadQuiz();
+        await this.generateAndUploadQuiz(specificTopic);
     }
 }
 

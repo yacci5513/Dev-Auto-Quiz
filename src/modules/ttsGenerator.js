@@ -47,8 +47,11 @@ class TTSGenerator {
     formatQuestionText(quiz) {
         let text = `${quiz.question} `;
         
+        const letters = ['에이', '비', '씨', '디'];
         quiz.options.forEach((option, index) => {
-            text += `${option} `;
+            // A) 내용 -> "에이. 내용" 형태로 변환
+            const cleanOption = option.replace(/^[A-D]\)\s*/, '');
+            text += `${letters[index]}. ${cleanOption}. `;
         });
         
         text += '정답은 무엇일까요?';

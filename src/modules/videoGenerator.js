@@ -69,7 +69,7 @@ class VideoGenerator {
         
         // 텍스트 줄바꿈 처리
         const questionLines = this.wrapText(quiz.question, 25);
-        const wrappedOptions = quiz.options.map(option => this.wrapText(option, 30));
+        const wrappedOptions = quiz.options.map(option => this.wrapText(option, 25));
         
         const svg = `
         <svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">

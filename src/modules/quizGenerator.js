@@ -28,9 +28,9 @@ class QuizGenerator {
         ];
     }
 
-    async generateQuiz() {
+    async generateQuiz(specificTopic = null) {
         try {
-            const category = this.getRandomCategory();
+            const category = specificTopic || this.getRandomCategory();
             const prompt = this.createQuizPrompt(category);
             
             const response = await this.openai.chat.completions.create({
