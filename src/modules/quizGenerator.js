@@ -26,6 +26,8 @@ class QuizGenerator {
             '건강과 의학 상식',
             '심리학 재미있는 이야기',
         ];
+        
+        this.usedRandomTopics = new Set();
     }
 
     async generateQuiz(specificTopic = null) {
@@ -38,7 +40,7 @@ class QuizGenerator {
                 messages: [
                     {
                         role: "system",
-                        content: "당신은 흥미롭고 교육적인 퀴즈를 만드는 전문가입니다. 사람들이 잘 모르지만 알면 좋은 신기한 지식을 퀴즈로 만들어주세요. 모든 내용은 반드시 한국어로만 작성해주세요. 영어 단어나 외국어는 사용하지 마세요."
+                        content: "당신은 한국의 교육 전문가입니다. 과학적으로 검증된 흥미로운 지식을 바탕으로 퀴즈를 만들어주세요. 반드시 자연스러운 한국어를 사용하고, 어색한 번역체나 부자연스러운 표현은 피해주세요. 모든 내용은 과학적 사실에 기반해야 하며, 구체적인 데이터나 수치가 포함된 내용을 선호합니다."
                     },
                     {
                         role: "user",
@@ -54,6 +56,35 @@ class QuizGenerator {
             
         } catch (error) {
             console.error('퀴즈 생성 오류:', error);
+            throw error;
+        }
+    }
+
+    async generateRandomInterestingQuiz() {
+        try {
+            const prompt = this.createRandomInterestingPrompt();
+            
+            const response = await this.openai.chat.completions.create({
+                model: "gpt-4",
+                messages: [
+                    {
+                        role: "system",
+                        content: "당신은 한국의 교육 전문가입니다. 과학적으로 검증된 흥미로운 지식을 바탕으로 퀴즈를 만들어주세요. 반드시 자연스러운 한국어를 사용하고, 어색한 번역체나 부자연스러운 표현은 피해주세요. 모든 내용은 과학적 사실에 기반해야 하며, 구체적인 데이터나 수치가 포함된 내용을 선호합니다."
+                    },
+                    {
+                        role: "user",
+                        content: prompt
+                    }
+                ],
+                max_tokens: 1000,
+                temperature: 1.2
+            });
+
+            const quizContent = response.choices[0].message.content;
+            return this.parseQuizContent(quizContent, "랜덤 흥미로운 지식");
+            
+        } catch (error) {
+            console.error('랜덤 퀴즈 생성 오류:', error);
             throw error;
         }
     }
@@ -80,6 +111,32 @@ C) [선택지 3]
 D) [선택지 4]
 정답: [정답 번호]
 설명: [핵심만 담은 간단한 설명, 최대 4문장]`;
+    }
+
+    createRandomInterestingPrompt() {
+        const randomSeed = Math.random().toString(36).substring(7);
+        const currentTime = new Date().toISOString();
+        
+        return `과학적으로 검증된 놀라운 사실 중 하나를 선택해서 퀴즈를 만들어주세요. (생성ID: ${randomSeed}, 시간: ${currentTime})
+
+중요한 요구사항:
+1. 반드시 과학적으로 입증된 사실만 사용할 것 (Wikipedia, 과학 논문, 교과서 등에서 확인 가능한 내용)
+2. 구체적인 수치나 데이터가 있는 내용 선호 (예: "인간의 뇌는 하루에 70,000개의 생각을 한다")
+3. 자연스러운 한국어로 작성 (어색한 번역체 금지)
+4. 퀴즈 형식: 객관식 4개 선택지 (A, B, C, D)
+5. 정답과 간단한 설명 (최대 3문장, 자연스러운 한국어)
+6. 매번 완전히 다른 주제를 선택하세요 (중복 금지)
+7. 심리학 주제와 같은 재미있는 주제를 위주로 선택하세요
+
+응답 형식:
+제목: [간결하고 흥미로운 제목]
+질문: [명확한 퀴즈 질문]
+A) [선택지 1]
+B) [선택지 2]
+C) [선택지 3]
+D) [선택지 4]
+정답: [정답 알파벳]
+설명: [자연스러운 한국어로 된 간단한 설명, 최대 3문장]`;
     }
 
     parseQuizContent(content, category) {

@@ -45,16 +45,16 @@ class TTSGenerator {
     }
 
     formatQuestionText(quiz) {
-        let text = `${quiz.question} `;
+        let text = `${quiz.question} 선택지를 들어보세요. `;
         
         const letters = ['에이', '비', '씨', '디'];
         quiz.options.forEach((option, index) => {
-            // A) 내용 -> "에이. 내용" 형태로 변환
+            // A) 내용 -> "에이번. 내용" 형태로 변환
             const cleanOption = option.replace(/^[A-D]\)\s*/, '');
-            text += `${letters[index]}. ${cleanOption}. `;
+            text += `${letters[index]}번, ${cleanOption}. `;
         });
         
-        text += '정답은 무엇일까요?';
+        text += '이제 정답을 선택해 주세요.';
         
         return text;
     }
@@ -72,7 +72,7 @@ class TTSGenerator {
     async createAudioFile(text, filename) {
         try {
             const mp3 = await this.openai.audio.speech.create({
-                model: "tts-1",
+                model: "tts-1-hd",
                 voice: "echo",
                 input: text,
                 speed: 1.15

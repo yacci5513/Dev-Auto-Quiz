@@ -181,8 +181,8 @@ class VideoGenerator {
         const answerLetter = quiz.correctAnswer.charAt(0);
         const correctOption = quiz.options.find(opt => opt.startsWith(answerLetter));
         
-        const explanationLines = this.wrapText(quiz.explanation, 22);
-        const answerLines = this.wrapText(correctOption || quiz.correctAnswer, 30);
+        const explanationLines = this.wrapText(quiz.explanation, 18);
+        const answerLines = this.wrapText(correctOption || quiz.correctAnswer, 18);
         
         const svg = `
         <svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
