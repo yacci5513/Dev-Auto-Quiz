@@ -75,7 +75,7 @@ class TTSGenerator {
                 model: "tts-1-hd",
                 voice: "echo",
                 input: text,
-                speed: 1.15
+                speed: 1.2
             });
 
             const filePath = path.join(this.outputDir, filename);
