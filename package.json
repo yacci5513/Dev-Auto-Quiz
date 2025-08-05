@@ -11,7 +11,9 @@
     "random": "node src/random.js",
     "schedule": "node src/cli.js start",
     "auth": "node src/cli.js auth",
-    "setup": "node src/cli.js setup"
+    "setup": "node src/cli.js setup",
+    "run-5x": "node scripts/run-multiple.js 5",
+    "random-5x": "node scripts/random-multiple.js 5"
   },
   "keywords": [
     "quiz",
